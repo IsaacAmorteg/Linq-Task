@@ -62,9 +62,12 @@ namespace Queries
         {
             //Query6. A string sequence is given.
             //Get a string consisting of the initial characters of all strings in the source sequence.
-
+            return str
+                .Where(s => !string.IsNullOrEmpty(s))
+                .Aggregate(string.Empty, (result, next) => result + next[0]);
             throw new NotImplementedException();
         }
+        
 
         public static IEnumerable<int> Query7(int k, IEnumerable<int> a)
         {
@@ -72,7 +75,11 @@ namespace Queries
             //Find the set-theoretic difference of two fragments A: the first contains all even numbers,
             //and the second - all numbers with ordinal numbers greater than K.
             //In the resulting sequence (not containing identical elements), reverse the order of the elements.
+            var firstPart = a.Where(x => x % 2 == 0);
+            var secondPart = a.Skip(k);
 
+            var result = firstPart.Except(secondPart).Distinct().Reverse();
+            return result;
             throw new NotImplementedException();
         }
 
