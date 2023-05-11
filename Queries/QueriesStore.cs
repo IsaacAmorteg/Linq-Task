@@ -88,7 +88,11 @@ namespace Queries
             //Query8. An integer K (> 0) and a string sequence A are given.
             //Sequence strings contain only numbers and capital letters of the Latin alphabet.
             //Extract from A all strings of length K that end in a digit, sorting them in an ascending order.
+            var result = a
+                .Where(s => s.Length == k && char.IsDigit(s[s.Length - 1]))
+                .OrderBy(s => s);
 
+            return result;
             throw new NotImplementedException();
         }
 
