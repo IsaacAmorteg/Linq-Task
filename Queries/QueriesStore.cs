@@ -44,7 +44,8 @@ namespace Queries
         {
             //Query4. Given a C character and a string sequence A.
             //Find the number of A elements that contain more than one character, provided that these elements start and end with C.
-
+            var result = str.Where(s => s.Length > 1 && s[0]== c && s[s.Length-1]== c);
+            return result.Count();
             throw new NotImplementedException();
         }
 
@@ -52,7 +53,8 @@ namespace Queries
         {
             //Query5. A string sequence is given.
             //Find the sum of the lengths of all strings in the given sequence.
-
+            var result = str.Sum(s => s.Length);
+            return result;
             throw new NotImplementedException();
         }
 
