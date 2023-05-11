@@ -26,7 +26,6 @@ namespace Queries
             //Combine all strings into one.
 
             return str.Aggregate((accumulated, next) => accumulated + next);
-
             throw new NotImplementedException();
         }
 
@@ -36,7 +35,8 @@ namespace Queries
             //Output the first string from A that starts with a digit and has length L.
             //If there are no required strings in the sequence A, then output the string "Not found".
             //Indication. To handle the situation associated with the absence of required rows, use the ?? operation.
-
+            var result = str.FirstOrDefault(s => s.Length == l && char.IsDigit(s[0]));
+            return result ?? "Not found";
             throw new NotImplementedException();
         }
 
