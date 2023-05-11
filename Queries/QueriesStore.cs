@@ -25,6 +25,8 @@ namespace Queries
             //There is a sequence of strings.
             //Combine all strings into one.
 
+            return str.Aggregate((accumulated, next) => accumulated + next);
+
             throw new NotImplementedException();
         }
 
