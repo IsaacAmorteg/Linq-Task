@@ -174,7 +174,11 @@ namespace Queries
             //Represent the found union as a sequence of strings containing the first and second elements of the pair,
             //colon-separated, e.g. "AB: CD". The order of the pairs must be determined by the order
             //first elements of pairs (in ascending order), and for equal first elements - by the order of the second elements of pairs (in descending order).
-
+            var innerUnion = from x in a
+                             join y in b on x.Length equals y.Length
+                             orderby x ascending, y descending
+                             select $"{x}:{y}";
+            return innerUnion;
             throw new NotImplementedException();
         }
 
@@ -187,6 +191,13 @@ namespace Queries
             //Order the resulting sequence in an ascending order of keys.
             //Indication. Use the GroupBy method.
 
+            var groups = a.GroupBy(n => n % 10);
+
+            var result = groups.OrderBy(g => g.Key)
+                .Select(g => $"{g.Key}: {g.Sum()}");
+
+            return result;
+
             throw new NotImplementedException();
         }
 
@@ -196,6 +207,15 @@ namespace Queries
             //includes the following fields: <School number> <Entry year> <Last name>
             //Return a dictionary, where the key is the year, the value is the number of different schools that applicants graduated from this year.
             //Order the elements of the dictionary in ascending order of the number of schools, and for matching numbers - in ascending order of the year number.
+           var result = enrollees
+                       .GroupBy(e => e.YearGraduate)
+                       .ToDictionary(
+                            g => g.Key,
+                            g => g.Select(e => e.SchoolNumber).Count()
+       );
+
+            return result.OrderBy(kvp => kvp.Key).ThenBy(kvp => kvp.Value).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
 
             throw new NotImplementedException();
         }
