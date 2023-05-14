@@ -102,6 +102,10 @@ namespace Queries
             //Find the set-theoretic union of two fragments A: the first contains all elements up to the first element,
             //greater D (not including it), and the second - all elements, starting from the element with the ordinal number K.
             //Sort the resulting sequence (not containing identical elements) in descending order.
+            var firstFragment = a.TakeWhile(x => x <= d);
+            var secondFragment = a.Skip(k - 1);
+            var result = firstFragment.Union(secondFragment).Distinct().OrderByDescending(x => x);
+            return result;
 
             throw new NotImplementedException();
         }
@@ -110,7 +114,10 @@ namespace Queries
         {
             //Query10. A sequence of positive integers is given.
             //Processing only odd numbers, get a sequence of their string representations and sort it in ascending order.
-
+            var result = n.Where(x => x % 2 == 1)
+                          .Select(x => x.ToString())
+                          .OrderBy(x => x);
+            return result;
             throw new NotImplementedException();
         }
 
@@ -121,6 +128,9 @@ namespace Queries
             //if the corresponding string of the source sequence has an odd length, then as
             //character the first character of this string is taken; otherwise, the last character of the string is taken.
             //Sort the received characters in descending order of their codes.
+            var result = str.Select(s => s.Length % 2 == 1 ? s[0] : s[s.Length - 1])
+                            .OrderByDescending(c => c);
+            return result;
 
             throw new NotImplementedException();
         }
@@ -130,7 +140,11 @@ namespace Queries
             //Query12. Integers K1 and K2 and integer sequences A and B are given.
             //Get a sequence containing all numbers from A greater than K1 and all numbers from B less than K2.
             //Sort the resulting sequence in ascending order.
+            var result = a.Where(x => x > k1)
+                          .Concat(b.Where(x => x < k2))
+                          .OrderBy(x => x);
 
+            return result;
             throw new NotImplementedException();
         }
 
@@ -143,6 +157,11 @@ namespace Queries
             //determined by the last digits of the original numbers.
             //Represent the found union as a sequence of strings containing the first and second elements of the pair,
             //separated by a hyphen, e.g. "49-129".
+            var innerUnion = from x in a
+                             join y in b on x % 10 equals y % 10
+                             select $"{x} - {y}";
+
+            return innerUnion;
 
             throw new NotImplementedException();
         }
